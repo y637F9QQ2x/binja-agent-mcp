@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+# Written by the plugin at runtime
+.mcp_auto_setup_done
+*.tmp
+# Never commit Binary Ninja license files, databases or the binaries you analyze
+license.dat
+*.bndb
+*.dll
+*.exe
+*.sys
+*.pdb
+*.so
+*.dylib
+# Context packs written by bn_mcp_client.py pack
+*.pack
+# Editors and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

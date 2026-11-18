@@ -1,0 +1,47 @@
+# The offline test suite (tests/run_tests.py) and pyflakes on Windows, macOS and Linux. No Binary Ninja is needed:
+# the suite runs the plugin against its fake binaryninja module and uses only 127.0.0.1. The backward-compatibility
+# tests compare the plugin with upstream v1.1.0, which is cloned outside the checkout (BN_MCP_TEST_BASELINE).
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        python: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install the bridge's packages and pyflakes
+        run: python -m pip install -r binja_agent_mcp/bridge/requirements.txt pyflakes
+      - name: pyflakes
+        shell: bash
+        # binja_agent_mcp/plugin/utils/number_utils.py is distributed unchanged from upstream (NOTICE.md), so it is
+        # not linted here.
+        run: git ls-files '*.py' | grep -v '^binja_agent_mcp/plugin/utils/number_utils.py$' | xargs python -m pyflakes
+      - name: Clone upstream v1.1.0 (the backward-compatibility baseline)
+        shell: bash
+        # The tag must still name the commit the comparison was written against.
+        run: |
+          dir="$RUNNER_TEMP/binary_ninja_mcp-v1.1.0"
+          git clone --quiet --depth 1 --branch v1.1.0 https://github.com/fosdickio/binary_ninja_mcp "$dir"
+          head="$(git -C "$dir" rev-parse HEAD)"
+          if [ "$head" != "d8a2709df69ff475d6be6366c2eec733663b008b" ]; then
+            echo "::error::upstream tag v1.1.0 names $head, not d8a2709df69ff475d6be6366c2eec733663b008b"
+            exit 1
+          fi
+          echo "BN_MCP_TEST_BASELINE=$dir" >> "$GITHUB_ENV"
+      - name: Offline test suite
+        run: python -I tests/run_tests.py -v

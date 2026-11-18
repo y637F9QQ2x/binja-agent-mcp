@@ -1,0 +1,21 @@
+{
+    "pluginmetadataversion": 2,
+    "name": "binja-agent-mcp",
+    "author": "Kazuma Matsumoto (modified version of Binary Ninja MCP by fosdickio and CX330Blake)",
+    "type": ["helper"],
+    "api": ["python3"],
+    "description": "An MCP server for Binary Ninja, built for LLM agents: selectable tool sets, bounded answers and authenticated localhost requests. Not affiliated with Vector 35.",
+    "longdescription": "binja-agent-mcp is a modified version of Binary Ninja MCP by fosdickio and CX330Blake (https://github.com/fosdickio/binary_ninja_mcp), based on upstream v1.1.0 (commit d8a2709df69ff475d6be6366c2eec733663b008b). Modified by Kazuma Matsumoto between 2026-10-14 and 2026-11-18. Licensed under GPL-3.0-or-later. Not affiliated with or endorsed by the upstream authors or Vector 35 Inc.",
+    "license": {
+        "name": "GPL-3.0-or-later",
+        "text": "Copyright 2025 fosdickio, CX330Blake\nCopyright 2026 Kazuma Matsumoto (modifications, 2026-10-14 to 2026-11-18)\n\nThis is a modified version of Binary Ninja MCP (https://github.com/fosdickio/binary_ninja_mcp), based on upstream v1.1.0.\n\nThis program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>."
+    },
+    "platforms": ["Darwin", "Windows", "Linux"],
+    "installinstructions": {
+        "Darwin": "See https://github.com/y637F9QQ2x/binja-agent-mcp",
+        "Windows": "See https://github.com/y637F9QQ2x/binja-agent-mcp",
+        "Linux": "See https://github.com/y637F9QQ2x/binja-agent-mcp"
+    },
+    "version": "1.0.0",
+    "minimumbinaryninjaversion": 4000
+}
